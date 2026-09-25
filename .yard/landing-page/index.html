@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hop · Short links that just work</title>
+    <meta
+      name="description"
+      content="Paste a long link, get a short one. Pick your own alias, see how often it's clicked, and grab a QR code."
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top wrap">
+      <a class="brand" href="./" aria-label="Hop home">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="9" />
+          <path d="M8 21c2-8 14-8 16 0" />
+          <circle cx="8" cy="22" r="2.2" />
+          <circle cx="24" cy="22" r="2.2" />
+        </svg>
+        <span>Hop</span>
+      </a>
+      <!-- Filled by app.js once Yard Auth answers, so a signed-in visitor
+           never sees "Sign in" flash first. -->
+      <div class="account" id="account" aria-live="polite"></div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <h1>Long links,<br /><span class="accent">short hops.</span></h1>
+        <p class="lede">
+          Paste any link and get a short one to share anywhere. Pick your own alias,
+          watch the clicks add up, and grab a QR code.
+        </p>
+
+        <form class="shorten" id="form" novalidate>
+          <div class="field">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.8 1.7" />
+              <path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" />
+            </svg>
+            <label class="sr-only" for="url">Long link</label>
+            <input
+              id="url"
+              type="url"
+              inputmode="url"
+              placeholder="Paste a long link…"
+              autocomplete="off"
+              spellcheck="false"
+              autofocus
+            />
+            <button class="btn primary" id="submit" type="submit">Shorten</button>
+          </div>
+          <div class="alias">
+            <label for="alias"><span class="prefix" id="prefix">s/</span></label>
+            <input
+              id="alias"
+              placeholder="custom-alias"
+              maxlength="32"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <span class="optional">optional</span>
+          </div>
+        </form>
+        <p class="note" id="note">Free to use. Sign in with Yard to save your links.</p>
+        <p class="error" id="error" role="alert" hidden></p>
+
+        <div class="result" id="result" hidden>
+          <button class="qr-thumb" id="result-qr" type="button" aria-label="Show QR code"></button>
+          <div class="result-body">
+            <span class="label">Your short link is ready</span>
+            <a class="short" id="result-link" target="_blank" rel="noopener"></a>
+            <span class="dest" id="result-dest"></span>
+          </div>
+          <button class="btn primary" id="result-copy" type="button">Copy</button>
+        </div>
+      </section>
+
+      <section class="links" id="links" hidden>
+        <header class="links-head">
+          <h2>Your links</h2>
+          <span class="count" id="count"></span>
+        </header>
+        <ul class="list" id="list"></ul>
+        <p class="empty" id="empty" hidden>Links you shorten show up here, with their click counts.</p>
+      </section>
+
+      <section class="features" aria-label="Features">
+        <article>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16M4 12h10M4 17h6" />
+          </svg>
+          <h3>Custom aliases</h3>
+          <p>Choose a code people will remember, like <code>s/launch</code>.</p>
+        </article>
+        <article>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+          </svg>
+          <h3>Click counts</h3>
+          <p>Every visit is counted, so you can see which links travel.</p>
+        </article>
+        <article>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2" />
+          </svg>
+          <h3>QR codes</h3>
+          <p>Every link gets a QR code, ready to download for print.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="foot wrap">
+      <span>Hop runs on <a href="https://yard.sh" target="_blank" rel="noopener">Yard</a>.</span>
+    </footer>
+
+    <!-- One row of "Your links", cloned by app.js. -->
+    <template id="row">
+      <li class="row">
+        <div class="row-main">
+          <a class="short" target="_blank" rel="noopener"></a>
+          <span class="dest"></span>
+        </div>
+        <span class="clicks"></span>
+        <div class="actions">
+          <button class="icon-btn" data-act="copy" type="button" aria-label="Copy short link" title="Copy">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="9" y="9" width="12" height="12" rx="2.5" />
+              <path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5" />
+            </svg>
+          </button>
+          <button class="icon-btn" data-act="qr" type="button" aria-label="Show QR code" title="QR code">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2z" />
+            </svg>
+          </button>
+          <button class="icon-btn danger" data-act="delete" type="button" aria-label="Delete link" title="Delete">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" />
+            </svg>
+          </button>
+        </div>
+      </li>
+    </template>
+
+    <dialog class="qr-dialog" id="qr">
+      <div class="qr-code" id="qr-code"></div>
+      <p class="short" id="qr-link"></p>
+      <div class="qr-actions">
+        <button class="btn" id="qr-close" type="button">Close</button>
+        <button class="btn primary" id="qr-download" type="button">Download PNG</button>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="qrcode.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
