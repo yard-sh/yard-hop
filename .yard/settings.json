@@ -1,0 +1,29 @@
+{
+  "version": 7,
+  "project_slug": "hop",
+  "ignore_files": [],
+  "services": [
+    {
+      "dir": "links",
+      "name": "links",
+      "url": "/s",
+      "access": "public",
+      "database_access": true
+    }
+  ],
+  "landing_page": {
+    "type": "custom",
+    "dir": ".yard/landing-page"
+  },
+  "pricing": {
+    "tiers": [
+      {
+        "name": "Base",
+        "price_cents": 0,
+        "is_default": true,
+        "pricing_model": "one_time",
+        "description": "Free forever"
+      }
+    ]
+  }
+}
