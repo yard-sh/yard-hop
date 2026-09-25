@@ -9,7 +9,7 @@
 // adds a trusted X-Yard-User-Id header, and it strips any the client sends.
 // There is deliberately no login code anywhere in this project.
 //
-//   GET    /                  back to the landing page (where sign-in lands)
+//   GET    /                  back to the landing page
 //   GET    /api/links         your links, newest first
 //   POST   /api/links         { url, alias? } -> the new link
 //   DELETE /api/links/<code>  delete one of your links
@@ -30,10 +30,9 @@ const RESERVED = new Set(["api"]);
 
 export default {
   async fetch(request, env) {
-    // Directory URLs arrive as their index.html: ".../s/" is "/index.html".
-    const path = new URL(request.url).pathname.replace(/\/index\.html$/, "/");
+    const path = new URL(request.url).pathname;
 
-    // Yard Auth's login and logout return here; send people back to the page.
+    // The service has no page of its own; the landing page is the app.
     if (path === "/") return redirect("../");
 
     if (path === "/api/links" || path.startsWith("/api/links/")) {

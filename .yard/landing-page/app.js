@@ -3,7 +3,8 @@
 // The page talks to one service, mounted at s/ (see .yard/settings.json):
 //   s/api/links       list, create and delete your links
 //   s/<code>          a short link; the service redirects and counts the click
-//   s/__yard/auth/*   Yard Auth's me, login and logout (no auth code here)
+// and to Yard Auth at the project root, beside this page:
+//   __yard/auth/*     me, login and logout (no auth code here)
 // Every URL is relative, so the page works at <team>.yard.sh/hop/, inside a
 // /@sandbox/, and on a custom domain.
 (() => {
@@ -15,10 +16,10 @@
   if (!base.endsWith("/") && !base.endsWith(".html")) base += "/";
   const SERVICE = new URL("s/", base);
 
-  // Sign-in and sign-out return to the service root, which sends the visitor
-  // straight back to this page.
-  const LOGIN = new URL("__yard/auth/login?return=/", SERVICE).href;
-  const LOGOUT = new URL("__yard/auth/logout", SERVICE).href;
+  // At the project root, return=/ is this page, so sign-in and sign-out both
+  // come straight back here. One session covers the page and the service.
+  const LOGIN = new URL("__yard/auth/login?return=/", base).href;
+  const LOGOUT = new URL("__yard/auth/logout?return=/", base).href;
 
   // What a signed-out visitor typed, kept across the trip through sign-in.
   const PENDING = "hop:pending";
@@ -38,7 +39,9 @@
   start();
 
   async function start() {
-    const me = await call("GET", "__yard/auth/me").catch(() => null);
+    const me = await fetch(new URL("__yard/auth/me", base))
+      .then((res) => res.json())
+      .catch(() => null);
     signedIn = Boolean(me?.authenticated);
     renderAccount(me);
     if (!signedIn) return;

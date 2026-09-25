@@ -62,12 +62,14 @@ a trusted `X-Yard-User-Id` header (and strips any the client sends). No header
 means 401, and every query is scoped to that user id. So you only ever see or
 delete your own links.
 
-**Signing in.** The page asks `s/__yard/auth/me` whether someone is signed in.
-**Sign in** and **Sign out** link to `s/__yard/auth/login?return=/` and
-`s/__yard/auth/logout`. Both come back to the service root `s/`, which
-redirects to the page. If a signed-out visitor presses **Shorten**, the page
-saves what they typed in `sessionStorage`, sends them through sign-in, and
-creates the link once they are back.
+**Signing in.** Yard Auth answers at the project root too, so the page uses it
+directly: it asks `__yard/auth/me` whether someone is signed in, and **Sign
+in** and **Sign out** link to `__yard/auth/login?return=/` and
+`__yard/auth/logout?return=/`. At the project root `return=/` is the page
+itself, and one session covers the page and the service. If a signed-out
+visitor presses **Shorten**, the page saves what they typed in
+`sessionStorage`, sends them through sign-in, and creates the link once they
+are back.
 
 **One table.** `links (code, url, owner_id, clicks, created_at)`, with `code`
 as the primary key. Following a link runs a single statement,
