@@ -71,11 +71,6 @@ async function listLinks(env, user) {
 }
 
 async function createLink(request, env, user) {
-  // Requiring JSON means a cross-site form can't post here: browsers preflight
-  // a cross-origin application/json request, and this service never allows it.
-  if (!request.headers.get("Content-Type")?.startsWith("application/json")) {
-    return json({ error: "Send the link as JSON." }, 415);
-  }
   const body = await request.json().catch(() => ({}));
 
   const url = normalizeUrl(body.url);

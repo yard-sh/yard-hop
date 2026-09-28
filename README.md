@@ -84,8 +84,7 @@ comes back as a clean 409, never an error.
 
 **Safe destinations.** The service only stores `http` and `https` links, so a
 short link can never point at `javascript:` or `data:`. `example.com/page`
-becomes `https://example.com/page`. The create endpoint only accepts JSON,
-which a cross-site form can't send without a CORS preflight.
+becomes `https://example.com/page`.
 
 **QR codes.** `qrcode.js` encodes the short link, and `app.js` draws it: as an
 SVG on the page and as a PNG for **Download**. Both are drawn on a white
