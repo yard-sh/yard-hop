@@ -91,11 +91,11 @@ async function createLink(request, env, user) {
   // A chosen alias gets one try. A generated code retries on the rare clash.
   for (let attempt = 0; attempt < (alias ? 1 : 5); attempt++) {
     const link = await env.DB.prepare(
-      `INSERT INTO links (code, url, owner_id) VALUES (?1, ?2, ?3)
+      `INSERT INTO links (code, url, owner_id, created_at) VALUES (?1, ?2, ?3, ?4)
        ON CONFLICT (code) DO NOTHING
        RETURNING code, url, clicks, created_at`,
     )
-      .bind(alias || randomCode(), url, user)
+      .bind(alias || randomCode(), url, user, Date.now())
       .first();
     if (link) return json(link, 201);
   }

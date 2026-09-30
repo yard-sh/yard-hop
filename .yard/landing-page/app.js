@@ -301,8 +301,8 @@
     return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
   }
 
-  function ago(iso) {
-    const seconds = (Date.now() - Date.parse(iso)) / 1000;
+  function ago(ms) {
+    const seconds = (Date.now() - ms) / 1000;
     const units = [
       ["year", 31536000],
       ["month", 2592000],
