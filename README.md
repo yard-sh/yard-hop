@@ -100,7 +100,7 @@ background so every phone can scan them, in light mode and dark mode alike.
 - **Limits.** `MAX_LINKS_PER_USER`, `MAX_URL_LENGTH` and `CODE_LENGTH` are at
   the top of `links/_service.js`.
 - **Make it paid.** Keep the service `public` so short links still open for
-  everyone. Then only allow buyers to create links: in `handleAPI`, reject
+  everyone. Then only allow paying users to create links: in `handleAPI`, reject
   requests where `X-Yard-Entitlement` is `none`. Finally, set a price on the
   tier in `.yard/settings.json`.
 - **Schema changes.** Add a new numbered file (`0002_….sql`) to
