@@ -120,6 +120,6 @@ anyone else sees it, run `yard sandbox create preview`, publish, then
 database, so test links never reach the real one. Use `yard db query "select *
 from links"` to look at the data, and `yard service logs` to read the service's logs.
 
-Hop needs a custom landing page and a hosted service (both Pro), plus Yard
-Auth for sign-in (Basic and Pro). Check what your team has with
+Hop needs a custom landing page, a hosted service and Yard Auth for sign-in,
+all included with Basic and Pro. Check what your team has with
 `yard me --json` → `.team_permissions`.
