@@ -18,6 +18,7 @@
   "pricing": {
     "tiers": [
       {
+        "key": "base",
         "name": "Base",
         "price_cents": 0,
         "is_default": true,
