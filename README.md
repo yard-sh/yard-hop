@@ -22,7 +22,7 @@ yard dev              # landing page:  http://localhost:9875/hop/
 Anyone can follow a short link. Making links needs a sign-in, and Yard Auth
 handles it: there is no login code in this repo. Locally, a **persona**
 stands in for Yard Auth. Click **Sign in** on the page and pick one
-(`signed-in`, `trial`, `member`, …). Each persona is a different person with
+(`signed-in`, `trial`, `team`, …). Each persona is a different person with
 their own links. `yard dev --reset-db` gives you an empty database.
 
 ## How it fits together
