@@ -29,7 +29,7 @@ their own links. `yard dev --reset-db` gives you an empty database.
 
 ```
 .yard/settings.json              one service "links" at /s: access=public, database_access=true;
-                                 landing_page=custom; a single free Base tier
+                                 landing_page=.yard/landing-page; a single free Base tier
 .yard/migrations/0001_init.sql   the links table
 .yard/landing-page/              the page, which is also the whole app
   index.html · styles.css        markup and design (light and dark)
@@ -120,6 +120,6 @@ anyone else sees it, run `yard sandbox create preview`, publish, then
 database, so test links never reach the real one. Use `yard db query "select *
 from links"` to look at the data, and `yard service logs` to read the service's logs.
 
-Hop needs a custom landing page, a hosted service and Yard Auth for sign-in,
+Hop needs a landing page, a hosted service and Yard Auth for sign-in,
 all included with Basic and Pro. Check what your team has with
 `yard me --json` → `.team_permissions`.
