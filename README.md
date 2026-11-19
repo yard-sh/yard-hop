@@ -28,8 +28,9 @@ their own links. `yard dev --reset-db` gives you an empty database.
 ## How it fits together
 
 ```
-.yard/settings.json              one service "links" at /s: access=public, database_access=true;
-                                 landing_page=.yard/landing-page; a single free Base tier
+.yard/settings.json              the landing page at / (dir .yard/landing-page); the service
+                                 "links" at /s: access=public, database_access=true; a single
+                                 free Base tier
 .yard/migrations/0001_init.sql   the links table
 .yard/landing-page/              the page, which is also the whole app
   index.html · styles.css        markup and design (light and dark)

@@ -1,8 +1,13 @@
 {
-  "version": 9,
+  "version": 10,
   "project_slug": "hop",
   "ignore_files": [],
   "services": [
+    {
+      "dir": ".yard/landing-page",
+      "name": "landing-page",
+      "url": "/"
+    },
     {
       "dir": "links",
       "name": "links",
@@ -11,9 +16,6 @@
       "database_access": true
     }
   ],
-  "landing_page": {
-    "dir": ".yard/landing-page"
-  },
   "pricing": {
     "tiers": [
       {
